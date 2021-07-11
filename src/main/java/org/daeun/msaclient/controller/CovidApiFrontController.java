@@ -1,12 +1,8 @@
-package org.daeun.msafront.controller;
+package org.daeun.msaclient.controller;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import lombok.extern.slf4j.Slf4j;
-import org.daeun.msafront.repository.CovidVaccineStatRepository;
-import org.daeun.msafront.vo.CovidVaccineStatVO;
+import org.daeun.msaclient.repository.CovidVaccineStatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.*;
@@ -17,13 +13,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-
-import static org.daeun.msafront.constants.Constants.ODCLOUD_API_PERSIZE;
 
 @RestController
 @Slf4j

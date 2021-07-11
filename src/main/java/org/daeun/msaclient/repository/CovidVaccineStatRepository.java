@@ -1,6 +1,6 @@
-package org.daeun.msafront.repository;
+package org.daeun.msaclient.repository;
 
-import org.daeun.msafront.vo.CovidVaccineStatVO;
+import org.daeun.msaclient.vo.CovidVaccineStatVO;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

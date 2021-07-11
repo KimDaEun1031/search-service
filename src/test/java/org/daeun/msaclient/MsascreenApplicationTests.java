@@ -1,4 +1,4 @@
-package org.daeun.msafront;
+package org.daeun.msaclient;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

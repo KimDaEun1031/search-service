@@ -1,4 +1,4 @@
-package org.daeun.msafront.vo;
+package org.daeun.msaclient.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
