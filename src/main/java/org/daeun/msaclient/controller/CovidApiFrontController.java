@@ -2,6 +2,7 @@ package org.daeun.msaclient.controller;
 
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.daeun.msaclient.repository.CovidVaccineStatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -71,10 +72,10 @@ public class CovidApiFrontController {
     @RequestMapping("/searchPeriodData")
     public String searchCovidVaccineStatDb(@RequestParam @DateTimeFormat(pattern = "yyyyMMdd") LocalDate startDate,
                                            @RequestParam @DateTimeFormat(pattern = "yyyyMMdd") LocalDate endDate,
-                                           @RequestParam String sido
+                                           @RequestParam List<String> sido
                                            ) {
 
-
+        log.info("list = {}",sido);
         Map<String, Object> result = new HashMap<String, Object>();
         String search = "";
         try {
@@ -85,7 +86,10 @@ public class CovidApiFrontController {
 
             log.info("get PeriodData");
 
-            String url = "http://localhost:9091/searchPeriodDataCovidVaccineStat?startDate="+startDate+"&endDate="+endDate+"&sido="+URLEncoder.encode(sido, "UTF-8");
+            String sidoList = StringUtils.join(sido,",");
+            log.info("sidoList = {}",sidoList);
+
+            String url = "http://localhost:9091/searchPeriodDataCovidVaccineStat?startDate="+startDate+"&endDate="+endDate+"&sido="+URLEncoder.encode(sidoList, "UTF-8");
             log.info(url);
 
             ResponseEntity<List> resultMap = restTemplate.exchange(URI.create(url), HttpMethod.GET, entity, List.class);
