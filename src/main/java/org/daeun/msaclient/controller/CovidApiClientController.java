@@ -3,8 +3,6 @@ package org.daeun.msaclient.controller;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.daeun.msaclient.repository.CovidVaccineStatRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -19,25 +17,20 @@ import java.util.*;
 
 @RestController
 @Slf4j
-public class CovidApiFrontController {
-
-    @Autowired
-    CovidVaccineStatRepository covidVaccineStatRepository;
+public class CovidApiClientController {
 
     @GetMapping("/searchTodayData")
     public String searchTodayDataCovidVaccineStat(@RequestParam(required = false, defaultValue = "#{T(java.time.LocalDate).now()}") @DateTimeFormat(pattern = "yyyyMMdd") LocalDate nowDate,
                                                   @RequestParam(required = false, defaultValue = "전국") String sido) {
         Map<String, Object> result = new HashMap<String, Object>();
 
-        log.info("date = {}", nowDate);
-
-        String jsonInString = "";
+        String mapInString = "";
         try {
             RestTemplate restTemplate = new RestTemplate();
 
-            String url = "http://localhost:9090/searchTodayData?nowDate="+nowDate+"&sido="+URLEncoder.encode(sido, "UTF-8");
+            String url = "http://localhost:9090/searchCovidVaccineStatTodayData?nowDate="+nowDate+"&sido="+URLEncoder.encode(sido, "UTF-8");
 
-            log.info(url);
+            log.info("url = {}",url);
 
             HttpHeaders header = new HttpHeaders();
             HttpEntity<?> entity = new HttpEntity<>(header);
@@ -52,7 +45,7 @@ public class CovidApiFrontController {
 
             log.info("body = {} ",resultMap.getBody());
 
-            jsonInString = resultMap.getBody().toString();
+            mapInString = resultMap.getBody().toString();
 
 
         } catch (HttpClientErrorException | HttpServerErrorException e) {
@@ -66,18 +59,18 @@ public class CovidApiFrontController {
             log.error(e.toString());
         }
 
-        return jsonInString;
+        return mapInString;
     }
 
     @RequestMapping("/searchPeriodData")
     public String searchCovidVaccineStatDb(@RequestParam @DateTimeFormat(pattern = "yyyyMMdd") LocalDate startDate,
                                            @RequestParam @DateTimeFormat(pattern = "yyyyMMdd") LocalDate endDate,
-                                           @RequestParam List<String> sido
+                                           @RequestParam List<String> sidoList
                                            ) {
 
-        log.info("list = {}",sido);
+        log.info("sidoList = {}",sidoList);
         Map<String, Object> result = new HashMap<String, Object>();
-        String search = "";
+        String jsonInString = "";
         try {
             RestTemplate restTemplate = new RestTemplate();
 
@@ -86,10 +79,10 @@ public class CovidApiFrontController {
 
             log.info("get PeriodData");
 
-            String sidoList = StringUtils.join(sido,",");
-            log.info("sidoList = {}",sidoList);
+            String sido = StringUtils.join(sidoList,",");
+            log.info("sido = {}",sido);
 
-            String url = "http://localhost:9091/searchPeriodDataCovidVaccineStat?startDate="+startDate+"&endDate="+endDate+"&sido="+URLEncoder.encode(sidoList, "UTF-8");
+            String url = "http://localhost:9091/searchPeriodDataCovidVaccineStat?startDate="+startDate+"&endDate="+endDate+"&sido="+URLEncoder.encode(sido, "UTF-8");
             log.info(url);
 
             ResponseEntity<List> resultMap = restTemplate.exchange(URI.create(url), HttpMethod.GET, entity, List.class);
@@ -99,8 +92,7 @@ public class CovidApiFrontController {
 
             Gson gson = new Gson();
 
-            search = gson.toJson(resultMap.getBody());
-            log.info("SUCCESS DATA");
+            jsonInString = gson.toJson(resultMap.getBody());
 
         } catch (HttpClientErrorException | HttpServerErrorException e) {
             result.put("statusCode", e.getRawStatusCode());
@@ -114,7 +106,7 @@ public class CovidApiFrontController {
 
         }
 
-        return search;
+        return jsonInString;
     }
 
 
