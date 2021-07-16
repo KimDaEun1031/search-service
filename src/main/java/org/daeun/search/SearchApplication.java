@@ -1,13 +1,13 @@
-package org.daeun.msaclient;
+package org.daeun.search;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MsascreenApplication {
+public class SearchApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MsascreenApplication.class, args);
+		SpringApplication.run(SearchApplication.class, args);
 	}
 
 }

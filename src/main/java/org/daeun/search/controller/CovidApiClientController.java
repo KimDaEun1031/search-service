@@ -1,4 +1,4 @@
-package org.daeun.msaclient.controller;
+package org.daeun.search.controller;
 
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
@@ -22,13 +22,11 @@ public class CovidApiClientController {
     @GetMapping("/searchTodayData")
     public String searchTodayDataCovidVaccineStat(@RequestParam(required = false, defaultValue = "#{T(java.time.LocalDate).now()}") @DateTimeFormat(pattern = "yyyyMMdd") LocalDate nowDate,
                                                   @RequestParam(required = false, defaultValue = "전국") String sido) {
-        Map<String, Object> result = new HashMap<String, Object>();
-
         String mapInString = "";
         try {
             RestTemplate restTemplate = new RestTemplate();
 
-            String url = "http://localhost:9090/searchCovidVaccineStatTodayData?nowDate="+nowDate+"&sido="+URLEncoder.encode(sido, "UTF-8");
+            String url = "http://localhost:9090/searchCovidVaccineStat  TodayData?nowDate="+nowDate+"&sido="+URLEncoder.encode(sido, "UTF-8");
 
             log.info("url = {}",url);
 
@@ -39,23 +37,15 @@ public class CovidApiClientController {
 
             ResponseEntity<Map> resultMap = restTemplate.exchange(URI.create(url), HttpMethod.GET, entity, Map.class);
 
-            result.put("statusCode", resultMap.getStatusCodeValue());
-            result.put("header", resultMap.getHeaders());
-            result.put("body", resultMap.getBody());
-
             log.info("body = {} ",resultMap.getBody());
 
             mapInString = resultMap.getBody().toString();
 
 
         } catch (HttpClientErrorException | HttpServerErrorException e) {
-            result.put("statusCode", e.getRawStatusCode());
-            result.put("body", e.getStatusText());
             log.error(e.toString());
 
         } catch (Exception e) {
-            result.put("statusCode", "999");
-            result.put("body", "excpetion 오류");
             log.error(e.toString());
         }
 
@@ -69,7 +59,7 @@ public class CovidApiClientController {
                                            ) {
 
         log.info("sidoList = {}",sidoList);
-        Map<String, Object> result = new HashMap<String, Object>();
+
         String jsonInString = "";
         try {
             RestTemplate restTemplate = new RestTemplate();
@@ -86,22 +76,15 @@ public class CovidApiClientController {
             log.info(url);
 
             ResponseEntity<List> resultMap = restTemplate.exchange(URI.create(url), HttpMethod.GET, entity, List.class);
-            result.put("statusCode", resultMap.getStatusCodeValue());
-            result.put("header", resultMap.getHeaders());
-            result.put("body", resultMap.getBody());
 
             Gson gson = new Gson();
 
             jsonInString = gson.toJson(resultMap.getBody());
 
         } catch (HttpClientErrorException | HttpServerErrorException e) {
-            result.put("statusCode", e.getRawStatusCode());
-            result.put("body", e.getStatusText());
             log.info(e.toString());
 
         } catch (Exception e) {
-            result.put("statusCode", "999");
-            result.put("body", "excpetion 오류");
             log.info(e.toString());
 
         }
