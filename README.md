@@ -165,8 +165,9 @@ localhost:9092
 	- default : 전국
 
 **EXAMPLE**
-1. Basic - localhost:9092/searchTodayData
-2. Parameter - localhost:9092/searchTodayData?nowDate=20210405&sido=
+1. Basic - localhost:9092/searchTodayData  
+2. Parameter - localhost:9092/searchTodayData?nowDate=20210405&sido=서울특별시
+
 ---
 지정한 시작 날짜와 끝 날짜, 지역 리스트를 DB Service에 요청해 값을 return받는다.
 ```
