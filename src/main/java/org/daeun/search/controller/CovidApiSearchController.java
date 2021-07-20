@@ -17,7 +17,7 @@ import java.util.*;
 
 @RestController
 @Slf4j
-public class CovidApiClientController {
+public class CovidApiSearchController {
 
     @GetMapping("/searchTodayData")
     public String searchTodayDataCovidVaccineStat(@RequestParam(required = false, defaultValue = "#{T(java.time.LocalDate).now()}") @DateTimeFormat(pattern = "yyyyMMdd") LocalDate nowDate,
@@ -26,7 +26,7 @@ public class CovidApiClientController {
         try {
             RestTemplate restTemplate = new RestTemplate();
 
-            String url = "http://localhost:9090/searchCovidVaccineStat  TodayData?nowDate="+nowDate+"&sido="+URLEncoder.encode(sido, "UTF-8");
+            String url = "http://localhost:9090/searchCovidVaccineStatTodayData?nowDate="+nowDate+"&sido="+URLEncoder.encode(sido, "UTF-8");
 
             log.info("url = {}",url);
 

@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>org.daeun</groupId>
-	<artifactId>msascreen</artifactId>
+	<artifactId>search</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>msascreen</name>
+	<name>search</name>
 	<description>Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
