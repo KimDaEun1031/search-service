@@ -1,1 +1,1 @@
-# search_client
+# search_service
