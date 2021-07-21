@@ -8,7 +8,7 @@
 > + MSA는 서비스 별로 형성관리를 분리함으로 이번 Study에서 분리 개발했다.
 > + Collector Service는 DB Service에 데이터를 Push하거나 Search Service에 받은 요청에 따라 값을 return 한다.
 > + https://github.com/KimDaEun1031/collector_service
-> + DB Service는 Collector Service에서 Push한 데이터를 받아 DB에 Insert한다.
+> + DB Service는 Collector Service에서 Push한 데이터를 받아 DB에 Insert하거나 Search Service 받은 요청에 따라 값을 return 한다.
 > + https://github.com/KimDaEun1031/db_service
 
 ## Search Service Description
